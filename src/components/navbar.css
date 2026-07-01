@@ -1,0 +1,395 @@
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 32px 0;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+  transition: padding 0.5s var(--transition), 
+              background-color 0.5s var(--transition), 
+              border-color 0.5s var(--transition);
+}
+
+/* Scrolled State */
+.navbar.scrolled {
+  padding: 18px 0;
+  background-color: rgba(8, 8, 8, 0.4);
+  backdrop-filter: blur(15px) saturate(140%);
+  -webkit-backdrop-filter: blur(15px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Active Menu State (When Mobile Menu Open) */
+.navbar.menu-active {
+  background-color: rgba(8, 8, 8, 0.98) !important;
+  backdrop-filter: blur(30px) !important;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+}
+
+/* Navbar Container - CSS Grid for mathematical centering */
+.navbar-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 48px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* 3-columns ensure the dock is perfectly centered */
+  align-items: center;
+  position: relative;
+}
+
+/* Brand Logo Styling */
+.nav-brand {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-heading);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.38em;
+  margin-right: -0.38em; /* Optical centering correction for letter-spacing */
+  color: var(--text-primary);
+  z-index: 1100;
+  justify-self: start; /* Align to the left grid column */
+  transition: opacity 0.3s ease;
+}
+
+.nav-brand:hover {
+  opacity: 0.85;
+}
+
+.brand-light {
+  font-weight: 300;
+  opacity: 0.9;
+}
+
+.brand-dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background-color: var(--accent);
+  border-radius: 50%;
+  margin: 0 12px;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+  transform: translateY(-1px);
+}
+
+.brand-bold {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Center Floating Dock Wrapper */
+.nav-menu-wrapper {
+  display: flex;
+  align-items: center;
+  justify-self: center; /* Center precisely in the middle column */
+}
+
+.nav-dock {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 10px 32px;
+  border-radius: 100px;
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  display: flex;
+  align-items: center;
+  transition: background-color 0.4s var(--transition), 
+              border-color 0.4s var(--transition), 
+              box-shadow 0.4s var(--transition),
+              transform 0.4s var(--transition);
+}
+
+.navbar.scrolled .nav-dock {
+  background: rgba(8, 8, 8, 0.6);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Dock Hover: Dim unhovered links */
+.nav-dock:hover .nav-link:not(:hover) .nav-link-text {
+  opacity: 0.3;
+}
+
+/* Nav Links List */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Nav Link Item */
+.nav-link {
+  display: block;
+  text-decoration: none;
+  height: 18px; /* Fixed height for clip-mask */
+  overflow: hidden;
+  position: relative;
+}
+
+/* Double-layered Inner Wrapper */
+.nav-link-inner {
+  display: flex;
+  flex-direction: column;
+  height: 36px; /* double height */
+  transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.nav-link:hover .nav-link-inner {
+  transform: translateY(-18px); /* Shift up to show the second line */
+}
+
+/* Link Typography */
+.nav-link-text {
+  display: block;
+  height: 18px;
+  line-height: 18px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  margin-right: -0.22em; /* Optical centering correction for letter-spacing */
+  color: var(--text-primary);
+  opacity: 0.75;
+  transition: color 0.4s var(--transition), opacity 0.4s var(--transition);
+}
+
+/* Second line inside inner (the hover version) */
+.nav-link-text.hover-text {
+  color: var(--accent); /* Elegant gold */
+  font-weight: 500;
+  opacity: 1;
+}
+
+/* CTA Login Button (Premium Outlined Pill with Slide Fill) */
+.nav-login {
+  position: relative;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  padding: 10px 26px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  justify-self: end; /* Align to the right grid column */
+  transition: border-color 0.4s var(--transition), color 0.4s var(--transition);
+}
+
+.nav-login span {
+  position: relative;
+  z-index: 2;
+  margin-right: -0.2em; /* Optical centering correction for letter-spacing */
+}
+
+.nav-login::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--text-primary);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--transition);
+  z-index: 1;
+}
+
+.nav-login:hover {
+  color: #080808;
+  border-color: var(--text-primary);
+}
+
+.nav-login:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Hamburger Toggle Button */
+.nav-toggle-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1100;
+  justify-self: end;
+}
+
+.hamburger-box {
+  width: 26px;
+  height: 16px;
+  position: relative;
+}
+
+.hamburger-line {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: var(--text-primary);
+  transition: transform 0.4s var(--transition),
+              opacity 0.4s var(--transition),
+              background-color 0.4s var(--transition);
+}
+
+.hamburger-line.top {
+  top: 0;
+}
+
+.hamburger-line.mid {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hamburger-line.bot {
+  bottom: 0;
+}
+
+/* ==========================================================================
+   Responsive / Tablet & Mobile Layout
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  /* Flex fallback for mobile viewports */
+  .navbar-container {
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .navbar {
+    padding: 24px 0;
+  }
+
+  .navbar.scrolled {
+    padding: 14px 0;
+  }
+
+  /* Reset dock styling in mobile menu overlay */
+  .nav-menu-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(8, 8, 8, 0.98);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s var(--transition), visibility 0.5s var(--transition);
+    z-index: 1000;
+  }
+
+  .nav-dock {
+    background: transparent;
+    border: none;
+    padding: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none !important;
+  }
+
+  /* When open */
+  .nav-menu-wrapper.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+  }
+
+  /* Adjust heights for larger typography in mobile view */
+  .nav-link {
+    height: 32px;
+  }
+
+  .nav-link-inner {
+    height: 64px;
+  }
+
+  .nav-link:hover .nav-link-inner {
+    transform: translateY(-32px);
+  }
+
+  .nav-link-text {
+    height: 32px;
+    line-height: 32px;
+    font-size: 20px; /* Cinematic header text size */
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    margin-right: -0.25em; /* Correct letter-spacing offset on mobile */
+  }
+
+  /* Staggered load animations */
+  .nav-links li {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: transform 0.6s var(--transition), opacity 0.6s var(--transition);
+  }
+
+  .nav-menu-wrapper.open .nav-links li {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(var(--index) * 0.1s + 0.15s);
+  }
+
+  /* Toggle button active */
+  .nav-toggle-btn {
+    display: flex;
+  }
+
+  .nav-login {
+    margin-right: 48px; /* Push it left relative to the hamburger */
+    padding: 8px 18px;
+    font-size: 10px;
+  }
+
+  /* Morphing hamburger to X close */
+  .menu-active .hamburger-line.top {
+    transform: translateY(8px) rotate(45deg);
+    background-color: var(--accent);
+  }
+
+  .menu-active .hamburger-line.mid {
+    opacity: 0;
+  }
+
+  .menu-active .hamburger-line.bot {
+    transform: translateY(-8px) rotate(-45deg);
+    background-color: var(--accent);
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-login {
+    display: none; /* Hide login CTA on tiny screens for maximum minimalism */
+  }
+  
+  .nav-brand {
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    margin-right: -0.28em;
+  }
+}
