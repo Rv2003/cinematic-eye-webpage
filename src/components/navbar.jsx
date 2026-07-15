@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router'
 import './navbar.css';
+
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -89,9 +91,9 @@ export function Navbar() {
         </div>
 
         {/* CTA Button */}
-        <a href="#login" className="nav-login" onClick={closeMenu}>
+        <Link to="/login" className="nav-login" onClick={closeMenu}>
           <span>Login</span>
-        </a>
+        </Link>
 
         {/* Hamburger Menu Toggle */}
         <button
