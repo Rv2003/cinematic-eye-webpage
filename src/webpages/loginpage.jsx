@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router";
-import { GoogleLogin } from '@react-oauth/google';
-import{jwtDecode} from "jwt-decode"
+//import { GoogleLogin } from '@react-oauth/google';
+//import{jwtDecode} from "jwt-decode"
 import "./login.css";
 import axios from "axios";
 import slide1 from "../assets/DSC_0056.jpg";
@@ -15,11 +15,11 @@ const slides = [slide1, slide2, slide3];
 
 
 
-export function Login() {
+export function Login({user,setUser,token,setToken}) {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
-
+ 
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 80);
     return () => clearTimeout(t);
@@ -37,13 +37,15 @@ export function Login() {
 
   async function handleLogin(e) {
 
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault(); 
     try {
       const res = await axios.post('http://localhost:5500/api/v1/auth/sign-in', {
         email: document.getElementById('email').value,
         password: document.getElementById('password').value
       });
       if (res.data.success) {
+        setUser(res.data.data.user.username)
+        setToken(res.data.data.token)
         console.log("success")
         navigate("/")
       }
@@ -53,6 +55,8 @@ export function Login() {
 
       return alert("Login failed: " + (error.response ? error.response.data.message : error.message));
     }
+  
+  
   }
 
   return (
@@ -170,32 +174,7 @@ export function Login() {
             <span className="divider-line"></span>
             
           </div>
-          <GoogleLogin onSuccess={
-
-            
-            async(credentialResponse)=>{
-              console.log(credentialResponse.credential)
-               try {
-      const res = await axios.post('http://localhost:5500/api/v1/auth/sign-upG', {
-        idToken:credentialResponse.credential
-      });
-      if (res.data.success) {
-        console.log("success")
-        navigate("/")
-      }
-    } catch (error) {
-
-      console.error("Login failed:", error.response ? error.response.data : error.message);
-
-      return alert("Login failed: " + (error.response ? error.response.data.message : error.message));
-    }
-            }
-            
-            
-            } onError={()=>console.log("Login failed")
-            }
-            auto_select={true}
-            theme={"filled_black"}/>
+         
           <p className="login-signup-text">
             Don't have an account?{" "}
             <a href="#" className="login-signup-link">Create Account</a>

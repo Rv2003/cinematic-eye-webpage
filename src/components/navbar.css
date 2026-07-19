@@ -168,6 +168,55 @@
   opacity: 1;
 }
 
+/* Right Side Wrapper */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-self: end;
+}
+
+/* CTA button fade wrapper */
+.nav-cta-wrap {
+  display: inline-flex;
+  align-items: center;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.nav-cta-wrap.fading {
+  opacity: 0;
+  transform: translateY(-6px) scale(0.95);
+  pointer-events: none;
+}
+
+/* Profile Icon Button */
+.nav-profile-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: background 0.3s var(--transition),
+              border-color 0.3s var(--transition),
+              box-shadow 0.3s var(--transition);
+}
+
+.nav-profile-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.nav-profile-btn:hover {
+  background: rgba(212, 175, 55, 0.08);
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.12);
+}
+
 /* CTA Login Button (Premium Outlined Pill with Slide Fill) */
 .nav-login {
   position: relative;
@@ -186,7 +235,6 @@
   align-items: center;
   justify-content: center;
   z-index: 100;
-  justify-self: end; /* Align to the right grid column */
   transition: border-color 0.4s var(--transition), color 0.4s var(--transition);
 }
 

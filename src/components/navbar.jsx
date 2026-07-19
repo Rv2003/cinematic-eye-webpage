@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router';
+import axios from 'axios';
 import './navbar.css';
 
 
-export function Navbar() {
+export function Navbar({user,setUser,token,setToken}) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +41,19 @@ export function Navbar() {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  function handleLogout() {
+    setUser(null);
+    navigate('/');
+    
+  }
+
+  async function handleProfile(){
+
+    
+
+
+  }
 
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${isMenuOpen ? 'menu-active' : ''}`}>
@@ -86,14 +101,40 @@ export function Navbar() {
                   </span>
                 </a>
               </li>
+
+              {user?(<li style={{ '--index': 4 }}>
+                <Link to="/booking" className="nav-link" onClick={closeMenu}>
+                  <span className="nav-link-inner">
+                    <span className="nav-link-text">BOOKINGS</span>
+                    <span className="nav-link-text hover-text">BOOKINGS</span>
+                  </span>
+              </Link>
+              </li>):(" ")}
+               
             </ul>
           </div>
         </div>
 
-        {/* CTA Button */}
-        <Link to="/login" className="nav-login" onClick={closeMenu}>
-          <span>Login</span>
-        </Link>
+        {/* Right Side: Profile Icon + CTA */}
+        <div className="nav-right">
+          {user && (
+            <button onClick={handleProfile} className="nav-profile-btn" aria-label="Profile">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M4 20c0-4 3.582-7 8-7s8 3 8 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+            </button>
+          )}
+          {user ? (
+            <Link to="/" className="nav-login" onClick={handleLogout}>
+              <span>Logout</span>
+            </Link>
+          ) : (
+            <Link to="/login" className="nav-login" onClick={closeMenu}>
+              <span>Login</span>
+            </Link>
+          )}
+        </div>
 
         {/* Hamburger Menu Toggle */}
         <button
