@@ -7,8 +7,8 @@ import { Booking } from './webpages/booking';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 function App() {
 
- const [user,setUser]=useState(" ")
- const [token,setToken]=useState(" ")
+ const [user,setUser]=useState( )
+ const [token,setToken]=useState( )
   return (
     <>
     <GoogleOAuthProvider clientId="806438665621-ot0fnvqdvp6irvj2nfme3ue53d8ic77o.apps.googleusercontent.com">
