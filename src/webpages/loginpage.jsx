@@ -42,7 +42,7 @@ export function Login({user,setUser,token,setToken}) {
       const res = await axios.post('http://localhost:5500/api/v1/auth/sign-in', {
         email: document.getElementById('email').value,
         password: document.getElementById('password').value
-      });
+      },{ withCredentials: true });
       if (res.data.success) {
         setUser(res.data.data.user.username)
         setToken(res.data.data.token)
