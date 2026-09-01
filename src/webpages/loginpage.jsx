@@ -1,6 +1,6 @@
 import { useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router";
-//import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 //import{jwtDecode} from "jwt-decode"
 import "./login.css";
 import axios from "axios";
@@ -164,7 +164,22 @@ export function Login({user,setUser,token,setToken}) {
                 <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
-
+           <GoogleLogin onSuccess={async (credentialResponse) => {
+  try {
+    const res = await axios.post(
+      'http://localhost:5500/api/v1/auth/google-signup',
+      { credential: credentialResponse.credential },
+      { withCredentials: true }
+    );
+    if (res.data.success) {
+      setUser(res.data.data.user.username);
+      setToken(res.data.data.token);
+      navigate('/');
+    }
+  } catch (error) {
+    console.error('Google sign-in failed:', error);
+  }
+}} />
           </form>
 
           {/* Divider */}

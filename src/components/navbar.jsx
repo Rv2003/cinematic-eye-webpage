@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router';
 import './navbar.css';
-
+import axios from 'axios';
 
 export function Navbar({ user, setUser, token, setToken }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -46,11 +46,17 @@ console.log('wens una huthth')
     setIsMenuOpen(false);
   };
 
-  function handleLogout() {
+async function handleLogout() {
+  try {
+    await axios.post('http://localhost:5500/api/v1/auth/sign-out', {}, { withCredentials: true });
+  } catch (error) {
+    console.error('Sign-out request failed:', error);
+  } finally {
     setUser(null);
+    setToken(null);
     navigate('/');
   }
-
+}
 
   return (
     <>
@@ -113,7 +119,7 @@ console.log('wens una huthth')
             </div>
           </div>
 
-          {/* Right Side: Login/Logout */}
+  
           <div className="nav-right">
             {user ? (
               <Link to="/" className="nav-login" onClick={handleLogout}>

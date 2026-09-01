@@ -7,6 +7,8 @@ import { Booking } from './webpages/booking';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useEffect } from 'react';
 import  axios from 'axios';
+const CLIENT_ID="806438665621-ot0fnvqdvp6irvj2nfme3ue53d8ic77o.apps.googleusercontent.com"
+
 function App() {
   
  const [user,setUser]=useState( )
@@ -29,7 +31,7 @@ function App() {
 }, []);
   return (
     <>
-    <GoogleOAuthProvider clientId="806438665621-ot0fnvqdvp6irvj2nfme3ue53d8ic77o.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={CLIENT_ID}>
    <Routes>
    
     <Route path='/' element={<Homepage user={user} setUser={setUser} token={token} setToken={setToken}/>}></Route>
