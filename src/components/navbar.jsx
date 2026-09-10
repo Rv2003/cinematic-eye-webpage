@@ -52,6 +52,7 @@ async function handleLogout() {
   } catch (error) {
     console.error('Sign-out request failed:', error);
   } finally {
+     
     setUser(null);
     setToken(null);
     navigate('/');

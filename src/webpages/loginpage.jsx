@@ -7,9 +7,7 @@ import axios from "axios";
 import slide1 from "../assets/DSC_0056.jpg";
 import slide2 from "../assets/DSC_7866.png";
 import slide3 from "../assets/DSC_9597.jpg";
-
-
-
+import { LoadingScreen } from "../components/loading";
 
 const slides = [slide1, slide2, slide3];
 
@@ -19,7 +17,7 @@ export function Login({user,setUser,token,setToken}) {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
- 
+ const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 80);
     return () => clearTimeout(t);
@@ -36,7 +34,7 @@ export function Login({user,setUser,token,setToken}) {
 
 
   async function handleLogin(e) {
-
+    setIsLoading(true);
     e.preventDefault(); 
     try {
       const res = await axios.post('http://localhost:5500/api/v1/auth/sign-in', {
@@ -48,17 +46,23 @@ export function Login({user,setUser,token,setToken}) {
         setToken(res.data.data.token)
         console.log("success")
         navigate("/")
+     
       }
     } catch (error) {
 
       console.error("Login failed:", error.response ? error.response.data : error.message);
 
       return alert("Login failed: " + (error.response ? error.response.data.message : error.message));
+    } finally {
+      setIsLoading(false);
     }
+    
   
   
   }
-
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
   return (
     <div className={`login-page ${loaded ? "animate-in" : ""}`}>
 

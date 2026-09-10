@@ -13,7 +13,7 @@ function App() {
   
  const [user,setUser]=useState( )
  const [token,setToken]=useState( )
-
+ const [authLoading,setAuthLoading]=useState(true)
 
  useEffect(() => {
   const restoreSession = async () => {
@@ -24,6 +24,8 @@ function App() {
     } catch (error) {
       // no valid refresh cookie — genuinely logged out
       setToken(null);
+    }finally{
+  setAuthLoading(false);
     }
   };
 
@@ -34,9 +36,9 @@ function App() {
     <GoogleOAuthProvider clientId={CLIENT_ID}>
    <Routes>
    
-    <Route path='/' element={<Homepage user={user} setUser={setUser} token={token} setToken={setToken}/>}></Route>
+    <Route path='/' element={<Homepage user={user} setUser={setUser} token={token} setToken={setToken} setAuthloading={setAuthLoading} authLoading={authLoading}/>}></Route>
      <Route path='/login' element={<Login  user={user} setUser={setUser} token={token} setToken={setToken}/>}></Route>
-     <Route path='/booking' element={<Booking user={user} setUser={setUser} token={token} setToken={setToken}/>}></Route>
+     <Route path='/booking' element={<Booking user={user} setUser={setUser} token={token} setToken={setToken} setAuthloading={setAuthLoading} authLoading={authLoading}/>}></Route>
     </Routes>
       
   </GoogleOAuthProvider>
