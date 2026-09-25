@@ -29,6 +29,8 @@ export  function Booking({token,user,authLoading}) {
   const [form, setForm] = useState(INITIAL_FORM);
   const [status, setStatus] = useState("idle"); 
 
+  const displayName = form.name || user?.username || "";
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -52,7 +54,8 @@ console.log(form)
       session:form.session,
       eventdate:form.date,
       bookeddate:form.date,
-      fullname:form.name,
+      fullname:form.name || user.username,
+      username:user.username,
       WhatsappNumber:form.phone,
       Location:form.location,
       Description:form.notes
@@ -128,7 +131,7 @@ if (authLoading) {
                   id="name"
                   name="name"
                   placeholder="Amaya Perera"
-                  value={user.username}
+                  value={displayName}
                   onChange={handleChange}
                   required
                 />

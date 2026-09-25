@@ -1,5 +1,7 @@
 import { Routes,Route} from 'react-router'
 import { useState } from 'react';
+import { Profile } from './webpages/profile';
+import {ProtectedRoutes} from './utils/protectedroutes';
 import './App.css'
 import { Homepage } from './webpages/homepage'
 import{Login} from "./webpages/loginpage";
@@ -11,8 +13,8 @@ const CLIENT_ID="806438665621-ot0fnvqdvp6irvj2nfme3ue53d8ic77o.apps.googleuserco
 
 function App() {
   
- const [user,setUser]=useState( )
- const [token,setToken]=useState( )
+ const [user,setUser]=useState(null)
+ const [token,setToken]=useState(null )
  const [authLoading,setAuthLoading]=useState(true)
 
  useEffect(() => {
@@ -24,6 +26,7 @@ function App() {
     } catch (error) {
       // no valid refresh cookie — genuinely logged out
       setToken(null);
+      setUser(null);
     }finally{
   setAuthLoading(false);
     }
@@ -39,6 +42,13 @@ function App() {
     <Route path='/' element={<Homepage user={user} setUser={setUser} token={token} setToken={setToken} setAuthloading={setAuthLoading} authLoading={authLoading}/>}></Route>
      <Route path='/login' element={<Login  user={user} setUser={setUser} token={token} setToken={setToken}/>}></Route>
      <Route path='/booking' element={<Booking user={user} setUser={setUser} token={token} setToken={setToken} setAuthloading={setAuthLoading} authLoading={authLoading}/>}></Route>
+     
+     
+     <Route  element={<ProtectedRoutes user={user} authLoading={authLoading}/>}>
+     <Route  path='/profile' element={<Profile token={token} setAuthloading={setAuthLoading} authLoading={authLoading}/>}/>
+     </Route>
+
+
     </Routes>
       
   </GoogleOAuthProvider>
