@@ -54,7 +54,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className={`hero-section ${loaded ? 'animate-in' : ''}`}>
+    <section id="home" className={`hero-section ${loaded ? 'animate-in' : ''}`}>
       <div className="hero-split-container">
         
         {/* Left Column: Typography */}

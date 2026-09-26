@@ -54,7 +54,7 @@ console.log(form)
       session:form.session,
       eventdate:form.date,
       bookeddate:form.date,
-      fullname:form.name || user.username,
+      fullname:form.name || user.username||user.name,
       username:user.username,
       WhatsappNumber:form.phone,
       Location:form.location,
